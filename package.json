@@ -1,0 +1,11 @@
+{
+  "name": "Pomodoro",
+  "version": "0.0.1",
+  "description": "Pomodoro in electron",
+  "main": "src/script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kevin Vandenborne",
+  "license": "ISC"
+}
