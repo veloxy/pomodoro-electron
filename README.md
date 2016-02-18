@@ -6,6 +6,10 @@ This is a very very basic pomodoro app in electron.
 
 Code is subject to massive refactoring, this is mostly just a try-out project but I intend to expand on it and clean it up.
 
+## Install (OSX)
+
+Download the tar.gz [here](https://github.com/veloxy/pomodoro-electron/releases), extract it and drag the `.app` file it into your Applications folder.
+
 ## Build
 
 ### OS X
