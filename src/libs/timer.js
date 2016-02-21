@@ -17,7 +17,7 @@ function Timer() {
     var time = object.getCurrentTime();
 
     if (time.minutes >= 25) {
-      object.stop(true);
+      object.stop(false);
       return;
     }
 
@@ -25,6 +25,10 @@ function Timer() {
   }
 
   object.stop = function(interrupt) {
+    if (interrupt === typeof 'undefined' || interrupt == null) {
+      interrupt = true;
+    }
+
     clearInterval(interval);
     object.emit('stop', interrupt);
   }

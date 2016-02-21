@@ -15,11 +15,21 @@ var menuTray = null,
   menuItems = {
     'start': {
       label: 'Start',
-      click: timer.start
+      click: function() {
+        timer.start()
+      }
     },
     'stop': {
       label: 'Stop',
-      click: timer.stop
+      click: function () {
+        timer.stop()
+      },
+    },
+    'quit': {
+      label: 'Quit Application',
+      click: function () {
+        app.quit()
+      },
     }
   };
 
@@ -34,11 +44,11 @@ app.on('ready', function(){
 function init() {
   menuTray = new tray(path.join(__dirname, 'assets/img/pomodoro-w.png'));
   menuTray.setTitle('');
-  menuTray.setContextMenu(menu.buildFromTemplate([menuItems.start]));
+  menuTray.setContextMenu(menu.buildFromTemplate([menuItems.start, menuItems.quit]));
 
   timer.on('start', function() {
     window.webContents.send('play-sound', path.join(__dirname, 'assets/sound/windup.mp3'));
-    menuTray.setContextMenu(menu.buildFromTemplate([menuItems.stop]));
+    menuTray.setContextMenu(menu.buildFromTemplate([menuItems.stop, menuItems.quit]));
   });
 
   timer.on('stop', function(interrupted) {
@@ -51,7 +61,7 @@ function init() {
         sound: path.join(__dirname, 'assets/sound/bell.mp3') });
     }
 
-    menuTray.setContextMenu(menu.buildFromTemplate([menuItems.start]));
+    menuTray.setContextMenu(menu.buildFromTemplate([menuItems.start, menuItems.quit]));
   });
 
   timer.on('update', function(data) {
