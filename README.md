@@ -20,4 +20,6 @@ electron-packager ./ Pomodoro --platform=darwin --arch=all --version=0.36.7 --ou
 
 ## Credits
 
-Pomodoro icon by José Campos from the Noun Project
+- Pomodoro icon by José Campos from the Noun Project
+- Ratchet sound from [Freesound user atomota](http://www.freesound.org/people/atomota/)
+- Bell sound from [Freesound user domrodrig](http://www.freesound.org/people/domrodrig/)

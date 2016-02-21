@@ -32,18 +32,25 @@ app.on('ready', function(){
 });
 
 function init() {
-  menuTray = new tray(path.join(__dirname, 'pomodoro-w.png'));
+  menuTray = new tray(path.join(__dirname, 'assets/img/pomodoro-w.png'));
   menuTray.setTitle('');
   menuTray.setContextMenu(menu.buildFromTemplate([menuItems.start]));
 
   timer.on('start', function() {
-    window.webContents.send('notification', 'Pomodoro', 'Timer started');
+    window.webContents.send('play-sound', path.join(__dirname, 'assets/sound/windup.mp3'));
     menuTray.setContextMenu(menu.buildFromTemplate([menuItems.stop]));
   });
 
-  timer.on('stop', function() {
+  timer.on('stop', function(interrupted) {
     menuTray.setTitle('');
-    window.webContents.send('notification', 'Pomodoro', 'Timer stopped');
+
+    if (!interrupted) {
+      window.webContents.send('notification', {
+        title: 'Time\'s up!',
+        body: 'Time for a short break',
+        sound: path.join(__dirname, 'assets/sound/bell.mp3') });
+    }
+
     menuTray.setContextMenu(menu.buildFromTemplate([menuItems.start]));
   });
 

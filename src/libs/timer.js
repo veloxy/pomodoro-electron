@@ -17,16 +17,16 @@ function Timer() {
     var time = object.getCurrentTime();
 
     if (time.minutes >= 25) {
-      object.stop();
+      object.stop(true);
       return;
     }
 
     object.emit('update', time);
   }
 
-  object.stop = function() {
+  object.stop = function(interrupt) {
     clearInterval(interval);
-    object.emit('stop');
+    object.emit('stop', interrupt);
   }
 
   object.getCurrentTime = function() {
