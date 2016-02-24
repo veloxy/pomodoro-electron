@@ -1,6 +1,7 @@
 {
   "name": "Pomodoro",
-  "version": "0.0.1",
+  "version": "0.0.2-alpha",
+  "repository": "git@github.com:veloxy/pomodoro-electron.git",
   "description": "Pomodoro in electron",
   "main": "src/script.js",
   "scripts": {
