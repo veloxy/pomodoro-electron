@@ -42,7 +42,7 @@ app.on('ready', function(){
 });
 
 function init() {
-  menuTray = new tray(path.join(__dirname, 'assets/img/pomodoro-w.png'));
+  menuTray = new tray(path.join(__dirname, 'assets/img/pomodoroTemplate.png'));
   menuTray.setTitle('');
   menuTray.setContextMenu(menu.buildFromTemplate([menuItems.start, menuItems.quit]));
 
