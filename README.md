@@ -1,21 +1,20 @@
-# Basic Pomodoro in Electron
+# Pomodoro App in Electron
 
-![App icon in OSX tray displaying time](screenshots/example.jpg "Pomodoro app screenshot")
+![App icon in OSX tray displaying time](screenshots/example.png "Pomodoro app screenshot")
 
 This is a very very basic pomodoro app in electron. 
 
 Code is subject to massive refactoring, this is mostly just a try-out project but I intend to expand on it and clean it up.
 
-## Install (OSX)
+## Installation
 
-Download the tar.gz [here](https://github.com/veloxy/pomodoro-electron/releases), extract it and drag the `.app` file it into your Applications folder.
+[Download latest release](https://github.com/veloxy/pomodoro-electron/releases) and install it like any other OSX application. 😋
 
-## Build
-
-### OS X
+## Building from source
 
 ```
-electron-packager ./ Pomodoro --platform=darwin --arch=all --version=0.36.7 --out=./build
+npm install
+npm run build
 ```
 
 ## Credits
