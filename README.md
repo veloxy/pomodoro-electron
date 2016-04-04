@@ -17,6 +17,11 @@ npm install
 npm run build
 ```
 
+## What's next?
+
+- Find a good name!
+- Decide if It should be kept simple or if it needs more features.
+
 ## Credits
 
 - Pomodoro icon by José Campos from the Noun Project
