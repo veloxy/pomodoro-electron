@@ -2,9 +2,13 @@
 
 ![App icon in OSX tray displaying time](https://goo.gl/yOrILm "Pomodoro app screenshot")
 
-This is a very very basic pomodoro app in electron. 
+This is a very simple pomodoro app in electron. It doesn't have any fancy features, just does what it's supposed to! 
 
-Code is subject to massive refactoring, this is mostly just a try-out project but I intend to expand on it and clean it up.
+This is all it does:
+
+* Start/stop the timer
+* Rings a bell and displays a notification when your 20 minutes are over
+* Displays the time in the menu bar when timer is started
 
 ## Installation
 
@@ -16,11 +20,6 @@ Code is subject to massive refactoring, this is mostly just a try-out project bu
 npm install
 npm run build
 ```
-
-## What's next?
-
-- Find a good name!
-- Decide if It should be kept simple or if it needs more features.
 
 ## Credits
 
