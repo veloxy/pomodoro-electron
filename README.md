@@ -1,6 +1,6 @@
 # Pomodoro App in Electron
 
-![App icon in OSX tray displaying time](screenshots/example.png "Pomodoro app screenshot")
+![App icon in OSX tray displaying time](https://goo.gl/yOrILm "Pomodoro app screenshot")
 
 This is a very very basic pomodoro app in electron. 
 
