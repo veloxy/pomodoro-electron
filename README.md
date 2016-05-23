@@ -10,6 +10,8 @@ This is all it does:
 * Rings a bell and displays a notification when your 20 minutes are over
 * Displays the time in the menu bar when timer is started
 
+Currently only available on OS X, PR's are welcome!
+
 ## Installation
 
 [Download latest release](https://github.com/veloxy/pomodoro-electron/releases) and install it like any other OSX application. 😋
