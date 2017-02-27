@@ -10,12 +10,15 @@
   "scripts": {
     "start": "electron ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "pack-linux": "electron-packager . Pomodoro --asar.unpack=protocol-link.html --overwrite --platform=linux --arch=x64 --out=out",
+    "pack-win": "electron-packager . Pomodoro --asar.unpack=protocol-link.html --overwrite --platform=win32 --arch=ia32 --icon=src/assets/icons/icon.icns --out=out",
     "pack-mac": "electron-packager . Pomodoro --asar.unpack=protocol-link.html --overwrite --platform=darwin --arch=x64 --icon=src/assets/icons/app.icns --out=out",
-    "build": "&& npm run pack-mac && npm run pack-win",
+    "build": "npm run pack-linux && npm run pack-mac && npm run pack-win",
     "release-mac":"npm run pack-mac && appdmg appdmg.json out/Pomodoro-darwin-x64.dmg",
-    "release-win":"npm run pack-win && node ./src/installer/SetupWindows.js "
+    "release-win":"npm run pack-win && node ./src/installer/SetupWindows.js ",
+    "release-linux":"npm run pack-linux && tar -zcvf out/pomodoro.tar.gz out/Pomodoro-linux-x64"
   },
-  "author": "Kevin Vandenborne",
+  "author": ["Kevin Vandenborne","Cyril Dupont"],
   "license": "ISC",
   "devDependencies": {
     "electron": "^1.3.5",

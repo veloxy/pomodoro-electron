@@ -1,10 +1,11 @@
 {
   "title": "Pomodoro",
-  "icon": "src/assets/icons/icon.icns",
+  "icon": "src/assets/icons/app.icns",
   "background": "src/assets/img/background.png",
   "icon-size": 180,
   "contents": [
-    { "x": 200, "y": 210, "type": "file", "path": "build/Pomodoro-darwin-x64/Pomodoro.app" },
+    { "x": 200, "y": 210, "type": "file", "path": "out/Pomodoro-darwin-x64/Pomodoro.app" },
     { "x": 200, "y": 450, "type": "link", "path": "/Applications" }
   ]
 }
+

@@ -41,6 +41,7 @@ String.prototype.paddingLeft = function (paddingValue) {
   return String(paddingValue + this).slice(-paddingValue.length);
 };
 
+
 app.on('ready', function(){
   window = new browserWindow({ width: 1, height: 1, show: false, skipTaskbar: true });
   window.loadURL('file://' + __dirname + '/index.html');
@@ -49,7 +50,6 @@ app.on('ready', function(){
 
 function init() {
   menuTray = new tray(path.join(__dirname, 'assets/img/pomodoroTemplate.png'));
-  menuTray.setTitle('');
   menuTray.setContextMenu(menu.buildFromTemplate([menuItems.start, menuItems.quit]));
 
   timer.on('start', function() {
@@ -60,7 +60,6 @@ function init() {
 
   timer.on('stop', function(interrupted) {
     menuTray.setTitle('');
-
     if (!interrupted) {
       window.webContents.send('notification', {
         title: 'Time\'s up!',
@@ -76,8 +75,15 @@ function init() {
     ':' + data.seconds.toString().paddingLeft('00');
     menuTray.setToolTip(time);
     menuTray.setTitle(time);
+
+    if(data.minutes != currentMinute && process.platform === 'linux'){
+      menuItems.time = { 'label' : data.minutes+' minutes' };
+      currentMinute = data.minutes;
+      menuTray.setContextMenu(menu.buildFromTemplate([menuItems.stop, menuItems.quit, menuItems.time]));
+    }
   });
 }
+
 //for generate windows setup , update and remove windows's application
 function handleSquirrelEvent() {
   if (process.argv.length === 1) {
@@ -140,3 +146,4 @@ function handleSquirrelEvent() {
       return true;
   }
 };
+
