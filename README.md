@@ -33,7 +33,7 @@ yarn release-win
 #### Linux
 ```
 yarn --ignore-platform
-yarn pack-linux
+yarn release-linux
 ```
 
 Of course, we can use npm instead of Yarn.
