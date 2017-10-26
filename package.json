@@ -6,13 +6,35 @@
   "main": "src/script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf build/ && electron-packager ./ Pomodoro --platform=darwin --arch=all --version=0.36.7 --out=./build --ignore build --overwrite --icon=src/assets/icons/icon.icns --prune && appdmg appdmg.json build/Pomodoro-darwin-x64.dmg"
+    "build": "node_modules/.bin/electron-builder"
   },
   "author": "Kevin Vandenborne",
   "license": "ISC",
   "devDependencies": {
-    "appdmg": "^0.3.6",
-    "electron-packager": "^5.2.1",
-    "jshint": "^2.9.1"
+    "electron-builder": "^19.42.1"
+  },
+  "build": {
+    "mac": {
+      "target": "dmg",
+      "icon": "src/assets/icons/icon.icns"
+    },
+    "dmg": {
+      "title": "Pomodoro",
+      "icon": "src/assets/icons/icon.icns",
+      "background": "src/assets/img/background.png",
+      "iconSize": 180,
+      "contents": [
+        {
+          "x": 200,
+          "y": 210
+        },
+        {
+          "x": 200,
+          "y": 450,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
   }
 }

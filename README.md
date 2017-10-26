@@ -19,8 +19,8 @@ Currently only available on OS X, PR's are welcome!
 ## Building from source
 
 ```
-npm install
-npm run build
+yarn install
+yarn build
 ```
 
 ## Credits
