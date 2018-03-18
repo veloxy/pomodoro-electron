@@ -8,6 +8,7 @@ const electron = require('electron'),
   tray = electron.Tray,
   browserWindow = require('electron').BrowserWindow,
   notification = require('electron').Notification,
+  dialog = require('electron').dialog,
   settings = require('electron-settings'),
   path = require('path'),
   slackWebClient = require('@slack/client').WebClient,
@@ -90,9 +91,9 @@ function showSettings() {
   } else {
     settingsWindow = new browserWindow({
       width: 700,
-      height: 440,
+      height: 600,
       minWidth: 700,
-      minHeight: 440,
+      minHeight: 600,
       useContentSize: true,
       acceptFirstMouse: true,
       backgroundColor: '#fff',
@@ -105,10 +106,16 @@ function showSettings() {
     });
     settingsWindow.loadURL('file://' + __dirname + '/settings.html');
 
+    // settingsWindow.webContents.openDevTools();
+
     settingsWindow.on('closed', function () {
       settingsWindow = null;
     });
   }
+}
+
+function slackError(error, msg) {
+  dialog.showErrorBox(msg, error.message);
 }
 
 function setSlackFocus(minutes) {
@@ -124,11 +131,21 @@ function setSlackFocus(minutes) {
         status_emoji: settings.get('slack_status_emoji'),
         status_text: settings.get('slack_status_message')
       }
-    });
+    }).then((res) => {
+      console.log('Set slack status correctly');
+      }).catch((err) => {
+        slackError(err, "Couldn't set Slack status");
+      });
   }
 
   if (settings.get('slack_do_not_disturb')) {
-    web.dnd.setSnooze({num_minutes: minutes});
+    web.dnd.setSnooze({ num_minutes: minutes })
+      .then((res) => {
+        console.log(`Set do not disturb for ${minutes} minutes`, res.ts);
+      })
+      .catch((err) => {
+        slackError(err, "Couldn't set Do Not Disturb mode");
+      });
   }
 }
 
@@ -140,11 +157,22 @@ function removeSlackFocus() {
   web = new slackWebClient(token);
 
   if (settings.get('slack_status')) {
-    web.users.profile.set({ profile: { status_emoji: '', status_text: '' } });
+    web.users.profile.set({ profile: { status_emoji: '', status_text: '' } })
+      .then((res) => {
+        console.log('Cleared the slack status');
+      })
+      .catch((err) => {
+        slackError(err, "Couldn't clear Slack status");
+      });
   }
 
   if (settings.get('slack_do_not_disturb')) {
-    web.dnd.endDnd();
+    web.dnd.endDnd().then((res) => {
+      console.log('Turned off slack do not disturbe mode');
+    })
+    .catch((err) => {
+      slackError(err, "Couldn't turn off Do Not Disturb mode");
+    });
   }
 }
 

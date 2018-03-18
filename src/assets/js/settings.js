@@ -1,4 +1,4 @@
-const {remote} = require('electron')
+const {remote, shell} = require('electron')
 const { Menu, MenuItem } = remote
 
 const settings = require('electron-settings');
@@ -26,6 +26,11 @@ function getSettings() {
 }
 
 $(document).ready(function () {
+  $(document).on('click', 'a[href^="http"]', function(event) {
+    event.preventDefault();
+    shell.openExternal(this.href);
+  });
+
   getSettings();
 
   $('#slack').change(function () {
@@ -55,7 +60,7 @@ $(document).ready(function () {
     settings.set(e.prop('id'), value);
   });
 
-  $('input').keyup(function () {
+  $('input').on('input', 'input:text', function() {
     e = $(this);
     if (e.prop('type') === 'checkbox') {
       value = e.is(':checked');
