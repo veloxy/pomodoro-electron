@@ -1,8 +1,8 @@
 {
-  "name": "slack-pomodoro",
+  "name": "Pomodoro",
   "version": "1.0.0",
   "repository": "git@github.com:veloxy/pomodoro-electron.git",
-  "description": "Slack Pomodoro in electron",
+  "description": "Pomodoro in electron",
   "main": "src/script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,7 +19,7 @@
       "icon": "src/assets/icons/icon.icns"
     },
     "dmg": {
-      "title": "Slack Pomodoro",
+      "title": "Pomodoro",
       "icon": "src/assets/icons/icon.icns",
       "background": "src/assets/img/background.png",
       "iconSize": 180,

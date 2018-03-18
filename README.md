@@ -1,4 +1,4 @@
-# Slack Pomodoro App in Electron
+# Pomodoro App in Electron
 
 ![App icon in OSX tray displaying time](https://goo.gl/yOrILm "Pomodoro app screenshot")
 

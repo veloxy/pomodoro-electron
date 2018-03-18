@@ -101,8 +101,7 @@ function showSettings() {
       minimizable: false,
       maximizable: false,
       alwaysOnTop: true,
-      center: true,
-      title: 'Slack Pomodoro Settings'
+      center: true
     });
     settingsWindow.loadURL('file://' + __dirname + '/settings.html');
 
