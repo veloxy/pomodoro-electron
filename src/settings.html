@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🍅 Settings</title>
+
+  <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/settings.css">
+
+  <script src="./assets/js/settings.js"></script>
+</head>
+  <body>
+    <div class="container">
+      <form class="mt-3">
+
+        <div class="form-check">
+          <input id="slack" class="form-check-input" type="checkbox">
+          <label for="slack" class="form-check-label">
+            Enable Slack integration
+          </label>
+        </div>
+
+        <br>
+
+        <div id="slackSettings" style="display: none;">
+
+          <div class="form-group row">
+            <label for="slack_token" class="col-sm-2 col-form-label">Token</label>
+            <div class="col-sm-10">
+              <input id="slack_token" type="password" class="form-control" placeholder="Slack token">
+            </div>
+          </div>
+
+          <div class="form-check">
+            <input id="slack_do_not_disturb" class="form-check-input" type="checkbox">
+            <label for="slack_do_not_disturb" class="form-check-label">
+              Do Not Disturb
+            </label>
+          </div>
+
+          <br>
+
+          <div class="form-check">
+            <input id="slack_status" class="form-check-input" type="checkbox">
+            <label for="slack_status" class="form-check-label">
+              Set custom status
+            </label>
+          </div>
+
+          <br>
+
+          <div id="slack_status_settings" style="display: none;">
+            <div class="form-group">
+              <label for="slack_status_emoji">Status Emoji Code</label>
+              <input id="slack_status_emoji" class="form-control" placeholder="e.g. :tomato:">
+            </div>
+
+            <div class="form-group">
+              <label for="slack_status_message">Status Message</label>
+              <input id="slack_status_message" class="form-control">
+            </div>
+          <end>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

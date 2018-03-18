@@ -1,40 +1,61 @@
 var events = require('events');
 
 function Timer() {
-  var startDate = null;
+  var currentDate = null;
+  var endDate = null;
   var interval = null;
   var intervalDelay = 100;
 
   var object = new events.EventEmitter;
 
   object.start = function() {
-    startDate = new Date();
-    interval = setInterval(object.update, intervalDelay);
+    currentDate = new Date();
+    endDate = new Date(currentDate.getTime() + (25 * 60 * 1000));
+
+    interval = setInterval(function () { object.update("focus"); }, intervalDelay);
     object.emit('start');
   }
 
-  object.update = function() {
-    var time = object.getCurrentTime();
+  object.shortBreak = function() {
+    currentDate = new Date();
+    endDate = new Date(currentDate.getTime() + (5 * 60 * 1000));
 
-    if (time.minutes >= 25) {
-      object.stop(false);
-      return;
-    }
-
-    object.emit('update', time);
+    interval = setInterval(function () { object.update("break"); }, intervalDelay);
+    object.emit('shortBreak');
   }
 
-  object.stop = function(interrupt) {
+  object.longBreak = function () {
+    currentDate = new Date();
+    endDate = new Date(currentDate.getTime() + (10 * 60 * 1000));
+
+    interval = setInterval(function () { object.update("break"); }, intervalDelay);
+    object.emit('longBreak');
+  }
+
+  object.update = function(mode) {
+    var time = object.getCurrentTime();
+
+    if (time.minutes <= 0) {
+      if (time.seconds <= 0) {
+        object.stop(false, mode);
+        return;
+      }
+    }
+
+    object.emit('update', { mode: mode, time: time });
+  }
+
+  object.stop = function(interrupt, mode) {
     if (interrupt === typeof 'undefined' || interrupt == null) {
       interrupt = true;
     }
 
     clearInterval(interval);
-    object.emit('stop', interrupt);
+    object.emit('stop', { interrupt: interrupt, mode: mode });
   }
 
   object.getCurrentTime = function() {
-    var timeDifference = new Date().getTime() - startDate.getTime();
+    var timeDifference = endDate.getTime() - new Date().getTime();
 
     return {
       minutes: Math.floor(timeDifference / 60000),

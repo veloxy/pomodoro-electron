@@ -1,14 +1,17 @@
-# Pomodoro App in Electron
+# Slack Pomodoro App in Electron
 
 ![App icon in OSX tray displaying time](https://goo.gl/yOrILm "Pomodoro app screenshot")
 
-This is a very simple pomodoro app in electron. It doesn't have any fancy features, just does what it's supposed to! 
+This is a very simple pomodoro app in electron. It doesn't have any fancy features, just does what it's supposed to!
 
 This is all it does:
 
 * Start/stop the timer
 * Rings a bell and displays a notification when your 20 minutes are over
 * Displays the time in the menu bar when timer is started
+* Support breaks (5min and 10min)
+* Turns on the Do Not Disturb mode on Slack while timer runs
+* Sets custom Slack status with emoji while running
 
 Currently only available on OS X, PR's are welcome!
 
