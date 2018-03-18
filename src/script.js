@@ -199,7 +199,7 @@ function init() {
   timer.on('stop', function(obj) {
     menuTray.setTitle('');
 
-    if (!obj.interrupted) {
+    if (obj && !obj.interrupt) {
       if (obj.mode == 'break') {
         notificationTitle = '💻 Time to work!';
         notificationMessage = 'Start a new pomodoro to get some more things done.';
