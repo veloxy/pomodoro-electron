@@ -154,16 +154,18 @@ function setSlackFocus(minutes) {
       console.log('Set slack status correctly');
       }).catch((err) => {
         slackError(err, "Couldn't set Slack status");
+        console.error(err);
       });
   }
 
   if (settings.get('slack_do_not_disturb')) {
     web.dnd.setSnooze({ num_minutes: minutes })
       .then((res) => {
-        console.log(`Set do not disturb for ${minutes} minutes`, res.ts);
+        console.log(`Set do not disturb for ${minutes} minutes`);
       })
       .catch((err) => {
         slackError(err, "Couldn't set Do Not Disturb mode");
+        console.error(err);
       });
   }
 }
@@ -182,6 +184,7 @@ function removeSlackFocus() {
       })
       .catch((err) => {
         slackError(err, "Couldn't clear Slack status");
+        console.error(err);
       });
   }
 
@@ -191,6 +194,7 @@ function removeSlackFocus() {
     })
     .catch((err) => {
       slackError(err, "Couldn't turn off Do Not Disturb mode");
+      console.error(err);
     });
   }
 }
@@ -241,8 +245,9 @@ function init() {
 
     if (obj.mode == 'focus') {
       timer.shortBreak();
-      removeSlackFocus();
     }
+
+    removeSlackFocus();
   });
 
   timer.on('update', function(data) {
