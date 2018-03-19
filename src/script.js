@@ -77,12 +77,32 @@ const activeMenu = menu.buildFromTemplate(
   ]
 )
 
+const appTemplate = [{
+  label: "Application",
+  submenu: [
+      { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
+      { type: "separator" },
+      { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
+  ]}, {
+  label: "Edit",
+  submenu: [
+      { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+      { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+      { type: "separator" },
+      { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+      { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+      { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+      { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+  ]}
+];
+
 app.dock.hide();
 
 app.on('ready', function(){
   window = new browserWindow({ width: 1, height: 1, show: true, skipTaskbar: true });
   window.loadURL('file://' + __dirname + '/index.html');
   window.webContents.on('did-finish-load', init);
+  menu.setApplicationMenu(menu.buildFromTemplate(appTemplate));
 });
 
 function showSettings() {
