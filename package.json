@@ -36,5 +36,10 @@
         }
       ]
     }
+  },
+  "dependencies": {
+    "@slack/client": "^4.0.1",
+    "electron-settings": "^3.1.4",
+    "jquery": "^3.3.1"
   }
 }
