@@ -228,7 +228,7 @@ function init() {
         notificationTitle = '💻 Time to work!';
         notificationMessage = 'Start a new pomodoro to get some more things done.';
       } else {
-        notificationTitle = '🗣 Get up an talk!';
+        notificationTitle = '🗣 Get up and talk!';
         notificationMessage = 'Use this break to disconnect from ' +
                               'what you just did. Get up, go for a walk, talk to others.';
       }
