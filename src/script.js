@@ -18,12 +18,14 @@ var menuTray = null,
   window = null,
   settingsWindow = null,
   slackWeb = null;
+  slackNonFocusStatus = { profile: { status_emoji: '', status_text: '' } };
 
 const inactiveMenu = menu.buildFromTemplate(
   [
     {
       label: 'Start',
       click: function() {
+        saveCurrentSlackStatus();
         timer.start();
       }
     }, {
@@ -31,11 +33,13 @@ const inactiveMenu = menu.buildFromTemplate(
     }, {
       label: 'Short break',
       click: function() {
+        saveCurrentSlackStatus();
         timer.shortBreak();
       }
     }, {
       label: 'Long break',
       click: function() {
+        saveCurrentSlackStatus();
         timer.longBreak();
       }
     }, {
@@ -137,15 +141,35 @@ function slackError(error, msg) {
   dialog.showErrorBox(msg, error.message);
 }
 
-function setSlackFocus(minutes) {
-  if (!settings.get('slack')) { return; }
+function getSlackClient() {
+  if (!settings.get('slack')) { return null; }
   token = settings.get('slack_token');
-  if (!token || token.length < 10) { return; }
+  if (!token || token.length < 10) { return null; }
+  return new slackWebClient(token);
+}
 
-  web = new slackWebClient(token);
+function saveCurrentSlackStatus() {
+  const slackClient = getSlackClient();
+  if (slackClient) {
+    slackClient.users.profile.get()
+      .then((res) => {
+        const { status_emoji, status_text } = res.profile;
+        slackNonFocusStatus = {profile: { status_emoji, status_text } };
+      })
+      .catch((err) => {
+        const errorMsg = 'Failed to fetch user profile. ' +
+                        'If you had a slack status set, it will not be restored ' +
+                        'when the current pomodoro will end.'
+        slackError(err, errorMsg);
+        console.log(error);
+      });
+  }
+}
 
-  if (settings.get('slack_status')) {
-    web.users.profile.set({
+function setSlackFocus(minutes) {
+  const slackClient = getSlackClient();
+  if (slackClient && settings.get('slack_status')) {
+    slackClient.users.profile.set({
       profile: {
         status_emoji: settings.get('slack_status_emoji'),
         status_text: settings.get('slack_status_message')
@@ -158,8 +182,8 @@ function setSlackFocus(minutes) {
       });
   }
 
-  if (settings.get('slack_do_not_disturb')) {
-    web.dnd.setSnooze({ num_minutes: minutes })
+  if (slackClient && settings.get('slack_do_not_disturb')) {
+    slackClient.dnd.setSnooze({ num_minutes: minutes })
       .then((res) => {
         console.log(`Set do not disturb for ${minutes} minutes`);
       })
@@ -171,14 +195,9 @@ function setSlackFocus(minutes) {
 }
 
 function removeSlackFocus() {
-  if (!settings.get('slack')) { return; }
-  token = settings.get('slack_token');
-  if (!token || token.length < 10) { return; }
-
-  web = new slackWebClient(token);
-
-  if (settings.get('slack_status')) {
-    web.users.profile.set({ profile: { status_emoji: '', status_text: '' } })
+  const slackClient = getSlackClient();
+  if (slackClient && settings.get('slack_status')) {
+    slackClient.users.profile.set(slackNonFocusStatus)
       .then((res) => {
         console.log('Cleared the slack status');
       })
@@ -188,8 +207,8 @@ function removeSlackFocus() {
       });
   }
 
-  if (settings.get('slack_do_not_disturb')) {
-    web.dnd.endDnd().then((res) => {
+  if (slackClient && settings.get('slack_do_not_disturb')) {
+    slackClient.dnd.endDnd().then((res) => {
       console.log('Turned off slack do not disturbe mode');
     })
     .catch((err) => {
