@@ -13,7 +13,7 @@
        */
       if (options.sound) {
         options.silent = true;
-        var audio = new Audio(options.sound);
+        let audio = new Audio(options.sound);
         audio.play();
         options.sound = null;
       }
@@ -22,7 +22,7 @@
     });
 
     ipc.on('play-sound', function(event, soundFile) {
-      var audio = new Audio(soundFile);
+      let audio = new Audio(soundFile);
       audio.play();
     });
   </script>

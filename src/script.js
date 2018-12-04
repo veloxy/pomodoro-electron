@@ -7,18 +7,18 @@ const electron = require('electron'),
   menu = electron.Menu,
   tray = electron.Tray,
   browserWindow = require('electron').BrowserWindow,
-  notification = require('electron').Notification,
   dialog = require('electron').dialog,
   settings = require('electron-settings'),
   path = require('path'),
   slackWebClient = require('@slack/client').WebClient,
   timer = require('./libs/timer.js');
 
-var menuTray = null,
+let menuTray = null,
   window = null,
   settingsWindow = null,
-  slackWeb = null;
   slackNonFocusStatus = { profile: { status_emoji: '', status_text: '' } };
+
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
 
 const inactiveMenu = menu.buildFromTemplate(
   [
@@ -129,8 +129,6 @@ function showSettings() {
     });
     settingsWindow.loadURL('file://' + __dirname + '/settings.html');
 
-    // settingsWindow.webContents.openDevTools();
-
     settingsWindow.on('closed', function () {
       settingsWindow = null;
     });
@@ -143,7 +141,7 @@ function slackError(error, msg) {
 
 function getSlackClient() {
   if (!settings.get('slack')) { return null; }
-  token = settings.get('slack_token');
+  let token = settings.get('slack_token');
   if (!token || token.length < 10) { return null; }
   return new slackWebClient(token);
 }
@@ -241,6 +239,9 @@ function init() {
 
   timer.on('stop', function(obj) {
     menuTray.setTitle('');
+
+    let notificationTitle,
+      notificationMessage;
 
     if (obj && !obj.interrupt) {
       if (obj.mode == 'break') {
